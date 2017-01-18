@@ -1,0 +1,87 @@
+2017/01/18-14:41:16.956 128c Recovering log #93
+2017/01/18-14:41:16.956 128c Level-0 table #97: started
+2017/01/18-14:41:16.974 128c Level-0 table #97: 8812 bytes OK
+2017/01/18-14:41:17.019 128c Delete type=0 #93
+2017/01/18-14:41:17.020 128c Delete type=3 #91
+2017/01/18-14:41:26.383 1a3c Compacting 1@0 + 2@1 files
+2017/01/18-14:41:26.417 1a3c Generated table #99: 13 keys, 3527 bytes
+2017/01/18-14:41:26.449 1a3c Generated table #100: 656 keys, 75531 bytes
+2017/01/18-14:41:26.449 1a3c Compacted 1@0 + 2@1 files => 79058 bytes
+2017/01/18-14:41:26.473 1a3c Delete type=2 #94
+2017/01/18-14:41:26.473 1a3c Delete type=2 #95
+2017/01/18-14:41:26.473 1a3c Delete type=2 #97
+2017/01/18-14:41:26.473 1a3c compacted to: files[ 0 2 12 0 0 0 0 ]
+2017/01/18-14:50:52.367 1a3c Level-0 table #102: started
+2017/01/18-14:50:52.648 1a3c Level-0 table #102: 4142737 bytes OK
+2017/01/18-14:50:52.665 1a3c Delete type=0 #98
+2017/01/18-16:52:51.378 1a3c Level-0 table #104: started
+2017/01/18-16:52:51.697 1a3c Level-0 table #104: 4166033 bytes OK
+2017/01/18-16:52:51.736 1a3c Delete type=0 #101
+2017/01/18-17:03:40.779 1a3c Level-0 table #106: started
+2017/01/18-17:03:41.034 1a3c Level-0 table #106: 4107271 bytes OK
+2017/01/18-17:03:41.056 1a3c Delete type=0 #103
+2017/01/18-17:06:01.581 1a3c Level-0 table #108: started
+2017/01/18-17:06:01.849 1a3c Level-0 table #108: 4147260 bytes OK
+2017/01/18-17:06:01.881 1a3c Delete type=0 #105
+2017/01/18-17:06:01.882 1a3c Compacting 4@0 + 2@1 files
+2017/01/18-17:06:01.896 1a3c Generated table #109: 13 keys, 3527 bytes
+2017/01/18-17:06:01.937 1a3c Generated table #110: 876 keys, 95262 bytes
+2017/01/18-17:06:01.937 1a3c Compacted 4@0 + 2@1 files => 98789 bytes
+2017/01/18-17:06:01.968 1a3c Delete type=2 #99
+2017/01/18-17:06:01.968 1a3c Delete type=2 #100
+2017/01/18-17:06:01.969 1a3c Delete type=2 #102
+2017/01/18-17:06:01.969 1a3c Delete type=2 #104
+2017/01/18-17:06:01.970 1a3c Delete type=2 #106
+2017/01/18-17:06:01.970 1a3c Delete type=2 #108
+2017/01/18-17:06:01.970 1a3c compacted to: files[ 0 2 12 0 0 0 0 ]
+2017/01/18-17:09:50.296 1a3c Level-0 table #112: started
+2017/01/18-17:09:50.598 1a3c Level-0 table #112: 4125290 bytes OK
+2017/01/18-17:09:50.617 1a3c Delete type=2 #106
+2017/01/18-17:09:50.618 1a3c Delete type=0 #107
+2017/01/18-17:11:43.475 1a3c Level-0 table #114: started
+2017/01/18-17:11:43.748 1a3c Level-0 table #114: 4179227 bytes OK
+2017/01/18-17:11:43.786 1a3c Delete type=0 #111
+2017/01/18-17:14:38.031 1a3c Level-0 table #116: started
+2017/01/18-17:14:38.312 1a3c Level-0 table #116: 4182972 bytes OK
+2017/01/18-17:14:38.353 1a3c Delete type=0 #113
+2017/01/18-17:19:38.933 1a3c Level-0 table #118: started
+2017/01/18-17:19:39.146 1a3c Level-0 table #118: 4214877 bytes OK
+2017/01/18-17:19:39.202 1a3c Delete type=0 #115
+2017/01/18-17:19:39.202 1a3c Compacting 4@0 + 2@1 files
+2017/01/18-17:19:39.288 1a3c Generated table #119: 13 keys, 3527 bytes
+2017/01/18-17:19:39.359 1a3c Generated table #120: 948 keys, 100487 bytes
+2017/01/18-17:19:39.359 1a3c Compacted 4@0 + 2@1 files => 104014 bytes
+2017/01/18-17:19:39.385 1a3c Delete type=2 #109
+2017/01/18-17:19:39.385 1a3c Delete type=2 #110
+2017/01/18-17:19:39.385 1a3c Delete type=2 #112
+2017/01/18-17:19:39.385 1a3c Delete type=2 #114
+2017/01/18-17:19:39.386 1a3c Delete type=2 #116
+2017/01/18-17:19:39.386 1a3c Delete type=2 #118
+2017/01/18-17:19:39.387 1a3c compacted to: files[ 0 2 12 0 0 0 0 ]
+2017/01/18-17:22:27.949 1a3c Level-0 table #122: started
+2017/01/18-17:22:28.234 1a3c Level-0 table #122: 4214174 bytes OK
+2017/01/18-17:22:28.256 1a3c Delete type=0 #117
+2017/01/18-17:34:21.758 1a3c Level-0 table #124: started
+2017/01/18-17:34:22.003 1a3c Level-0 table #124: 4202838 bytes OK
+2017/01/18-17:34:22.040 1a3c Delete type=0 #121
+2017/01/18-17:36:26.373 1a3c Level-0 table #126: started
+2017/01/18-17:36:26.660 1a3c Level-0 table #126: 4214770 bytes OK
+2017/01/18-17:36:26.683 1a3c Delete type=0 #123
+2017/01/18-17:37:57.329 1a3c Level-0 table #128: started
+2017/01/18-17:37:57.548 1a3c Level-0 table #128: 4222000 bytes OK
+2017/01/18-17:37:57.585 1a3c Delete type=0 #125
+2017/01/18-17:37:57.585 1a3c Compacting 4@0 + 2@1 files
+2017/01/18-17:37:57.603 1a3c Generated table #129: 13 keys, 3527 bytes
+2017/01/18-17:37:57.664 1a3c Generated table #130: 1004 keys, 103268 bytes
+2017/01/18-17:37:57.664 1a3c Compacted 4@0 + 2@1 files => 106795 bytes
+2017/01/18-17:37:57.700 1a3c Delete type=2 #119
+2017/01/18-17:37:57.700 1a3c Delete type=2 #120
+2017/01/18-17:37:57.701 1a3c Delete type=2 #122
+2017/01/18-17:37:57.701 1a3c Delete type=2 #124
+2017/01/18-17:37:57.701 1a3c Delete type=2 #126
+2017/01/18-17:37:57.701 1a3c Delete type=2 #128
+2017/01/18-17:37:57.702 1a3c compacted to: files[ 0 2 12 0 0 0 0 ]
+2017/01/18-17:40:33.740 1a3c Level-0 table #132: started
+2017/01/18-17:40:34.001 1a3c Level-0 table #132: 4176169 bytes OK
+2017/01/18-17:40:34.039 1a3c Delete type=2 #122
+2017/01/18-17:40:34.039 1a3c Delete type=0 #127

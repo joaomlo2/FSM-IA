@@ -1,0 +1,10 @@
+﻿<RecentlyViewedMethods>
+  <RecentlyViewedMethods>
+    <RecentMethod id="578b4dae-027a-8054-e41d-343609472d74%28FSM%20Prototype.CSharp%29-13/M%3ASmoothPosition.BeginSmoothing%28UnityEngine.Transform%2CUnityEngine.Vector2%2CSystem.Single%29" />
+    <RecentMethod id="578b4dae-027a-8054-e41d-343609472d74%28FSM%20Prototype.CSharp%29-13/M%3AGoToPosition.DoAction" />
+    <RecentMethod id="578b4dae-027a-8054-e41d-343609472d74%28FSM%20Prototype.CSharp%29-13/M%3AGlobalVariables.Awake" />
+    <RecentMethod id="578b4dae-027a-8054-e41d-343609472d74%28FSM%20Prototype.CSharp%29-13/M%3AEnemyStateMachine.Start" />
+    <RecentMethod id="578b4dae-027a-8054-e41d-343609472d74%28FSM%20Prototype.CSharp%29-13/M%3AEnemyStateMachine.Update" />
+    <RecentMethod id="578b4dae-027a-8054-e41d-343609472d74%28FSM%20Prototype.CSharp%29-13/M%3ASmooth.SmoothTranslationCoroutine%28UnityEngine.Transform%2CUnityEngine.Vector2%2CSystem.Single%29" />
+  </RecentlyViewedMethods>
+</RecentlyViewedMethods>

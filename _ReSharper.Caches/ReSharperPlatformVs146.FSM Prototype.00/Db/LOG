@@ -1,0 +1,43 @@
+2017/01/18-18:22:14.680 2b60 Recovering log #131
+2017/01/18-18:22:14.682 2b60 Level-0 table #134: started
+2017/01/18-18:22:14.821 2b60 Level-0 table #134: 1520463 bytes OK
+2017/01/18-18:22:14.887 2b60 Delete type=0 #131
+2017/01/18-18:22:14.888 2b60 Delete type=3 #96
+2017/01/18-18:22:23.039 17d0 Compacting 2@0 + 2@1 files
+2017/01/18-18:22:23.097 17d0 Generated table #136: 14 keys, 3569 bytes
+2017/01/18-18:22:23.189 17d0 Generated table #137: 1122 keys, 166575 bytes
+2017/01/18-18:22:23.189 17d0 Compacted 2@0 + 2@1 files => 170144 bytes
+2017/01/18-18:22:23.201 17d0 Delete type=2 #129
+2017/01/18-18:22:23.201 17d0 Delete type=2 #130
+2017/01/18-18:22:23.201 17d0 Delete type=2 #132
+2017/01/18-18:22:23.202 17d0 Delete type=2 #134
+2017/01/18-18:22:23.202 17d0 compacted to: files[ 0 2 12 0 0 0 0 ]
+2017/01/18-18:38:58.249 17d0 Level-0 table #139: started
+2017/01/18-18:38:58.535 17d0 Level-0 table #139: 3973871 bytes OK
+2017/01/18-18:38:58.562 17d0 Delete type=0 #135
+2017/01/18-18:41:58.918 17d0 Compacting 1@0 + 2@1 files
+2017/01/18-18:41:58.950 17d0 Generated table #140: 15 keys, 3823 bytes
+2017/01/18-18:41:59.016 17d0 Generated table #141: 1232 keys, 186029 bytes
+2017/01/18-18:41:59.016 17d0 Compacted 1@0 + 2@1 files => 189852 bytes
+2017/01/18-18:41:59.056 17d0 Delete type=2 #136
+2017/01/18-18:41:59.057 17d0 Delete type=2 #137
+2017/01/18-18:41:59.058 17d0 Delete type=2 #139
+2017/01/18-18:41:59.059 17d0 compacted to: files[ 0 2 12 0 0 0 0 ]
+2017/01/18-18:59:45.560 17d0 Level-0 table #143: started
+2017/01/18-18:59:45.838 17d0 Level-0 table #143: 4185592 bytes OK
+2017/01/18-18:59:45.866 17d0 Delete type=0 #138
+2017/01/18-19:01:44.860 17d0 Level-0 table #145: started
+2017/01/18-19:01:45.150 17d0 Level-0 table #145: 4183480 bytes OK
+2017/01/18-19:01:45.171 17d0 Delete type=0 #142
+2017/01/18-19:08:29.475 17d0 Compacting 2@0 + 2@1 files
+2017/01/18-19:08:29.516 17d0 Generated table #146: 15 keys, 3823 bytes
+2017/01/18-19:08:29.577 17d0 Generated table #147: 1242 keys, 153171 bytes
+2017/01/18-19:08:29.577 17d0 Compacted 2@0 + 2@1 files => 156994 bytes
+2017/01/18-19:08:29.614 17d0 Delete type=2 #140
+2017/01/18-19:08:29.614 17d0 Delete type=2 #141
+2017/01/18-19:08:29.614 17d0 Delete type=2 #143
+2017/01/18-19:08:29.615 17d0 Delete type=2 #145
+2017/01/18-19:08:29.616 17d0 compacted to: files[ 0 2 12 0 0 0 0 ]
+2017/01/18-19:14:05.328 17d0 Level-0 table #149: started
+2017/01/18-19:14:05.664 17d0 Level-0 table #149: 4045911 bytes OK
+2017/01/18-19:14:05.683 17d0 Delete type=0 #144
