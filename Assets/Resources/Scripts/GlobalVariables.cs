@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GlobalVariables : MonoBehaviour
-{
+public class GlobalVariables : MonoBehaviour {
+
     public static GlobalVariables singleton { get; private set; }
 
     public List<Vector2> GuardPoints;
