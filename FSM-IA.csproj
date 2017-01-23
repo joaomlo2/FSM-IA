@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Resources\Scripts\Enemy State Machine.cs" />
     <Compile Include="Assets\Resources\Scripts\GlobalVariables.cs" />
+    <Compile Include="Assets\Resources\Scripts\My Enemy HFSM.cs" />
     <Compile Include="Assets\Resources\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Resources\Scripts\Smooth.cs" />
   </ItemGroup>
