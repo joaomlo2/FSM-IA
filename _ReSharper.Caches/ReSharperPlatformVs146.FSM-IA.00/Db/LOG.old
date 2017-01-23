@@ -1,0 +1,45 @@
+2017/01/22-11:40:43.051 229c Recovering log #116
+2017/01/22-11:40:43.174 229c Level-0 table #119: started
+2017/01/22-11:40:43.347 229c Level-0 table #119: 2731483 bytes OK
+2017/01/22-11:40:43.427 229c Delete type=0 #116
+2017/01/22-11:40:43.428 229c Delete type=3 #50
+2017/01/22-11:40:43.510 b98 Compacting 4@0 + 2@1 files
+2017/01/22-11:40:44.045 b98 Generated table #121: 4937 keys, 2168217 bytes
+2017/01/22-11:40:44.345 b98 Generated table #122: 3522 keys, 2170533 bytes
+2017/01/22-11:40:45.226 b98 Generated table #123: 621 keys, 48460 bytes
+2017/01/22-11:40:45.226 b98 Compacted 4@0 + 2@1 files => 4387210 bytes
+2017/01/22-11:40:45.249 b98 Delete type=2 #105
+2017/01/22-11:40:45.249 b98 Delete type=2 #106
+2017/01/22-11:40:45.249 b98 Delete type=2 #113
+2017/01/22-11:40:45.250 b98 Delete type=2 #115
+2017/01/22-11:40:45.250 b98 Delete type=2 #117
+2017/01/22-11:40:45.251 b98 Delete type=2 #119
+2017/01/22-11:40:45.251 b98 compacted to: files[ 0 3 10 0 0 0 0 ]
+2017/01/22-13:29:22.238 b98 Expanding@1 1+7 to 2+7
+2017/01/22-13:29:22.238 b98 Compacting 2@1 + 7@2 files
+2017/01/22-13:29:22.689 b98 Generated table #124: 5381 keys, 2156185 bytes
+2017/01/22-13:29:23.013 b98 Generated table #125: 5355 keys, 2156789 bytes
+2017/01/22-13:29:23.297 b98 Generated table #126: 4703 keys, 2169062 bytes
+2017/01/22-13:29:23.721 b98 Generated table #127: 4058 keys, 2161341 bytes
+2017/01/22-13:29:24.094 b98 Generated table #128: 3230 keys, 2159372 bytes
+2017/01/22-13:29:24.547 b98 Generated table #129: 3303 keys, 2168441 bytes
+2017/01/22-13:29:24.995 b98 Generated table #130: 2709 keys, 2174372 bytes
+2017/01/22-13:29:25.218 b98 Generated table #131: 3575 keys, 2162868 bytes
+2017/01/22-13:29:25.426 b98 Generated table #132: 2593 keys, 2172314 bytes
+2017/01/22-13:29:25.426 b98 Compacted 2@1 + 7@2 files => 19480744 bytes
+2017/01/22-13:29:25.490 b98 Delete type=2 #54
+2017/01/22-13:29:25.491 b98 Delete type=2 #55
+2017/01/22-13:29:25.492 b98 Delete type=2 #56
+2017/01/22-13:29:25.493 b98 Delete type=2 #57
+2017/01/22-13:29:25.494 b98 Delete type=2 #58
+2017/01/22-13:29:25.495 b98 Delete type=2 #59
+2017/01/22-13:29:25.496 b98 Delete type=2 #108
+2017/01/22-13:29:25.497 b98 Delete type=2 #121
+2017/01/22-13:29:25.499 b98 Delete type=2 #122
+2017/01/22-13:29:25.500 b98 compacted to: files[ 0 1 12 0 0 0 0 ]
+2017/01/22-13:31:28.929 b98 Level-0 table #134: started
+2017/01/22-13:31:29.190 b98 Level-0 table #134: 4171934 bytes OK
+2017/01/22-13:31:29.229 b98 Delete type=0 #120
+2017/01/22-17:22:48.374 b98 Level-0 table #136: started
+2017/01/22-17:22:48.650 b98 Level-0 table #136: 4170170 bytes OK
+2017/01/22-17:22:48.691 b98 Delete type=0 #133
