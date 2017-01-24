@@ -63,8 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\Scripts\Enemy HFSM.cs" />
     <Compile Include="Assets\Resources\Scripts\Enemy State Machine.cs" />
+    <Compile Include="Assets\Resources\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Resources\Scripts\EnemyHFSM.cs" />
     <Compile Include="Assets\Resources\Scripts\GlobalVariables.cs" />
     <Compile Include="Assets\Resources\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Resources\Scripts\Smooth.cs" />
