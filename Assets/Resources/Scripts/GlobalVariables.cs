@@ -15,7 +15,6 @@ public class GlobalVariables : MonoBehaviour {
             Destroy(gameObject);
         }
         singleton = this;
-
         foreach (Transform t in transform)
         {
             GuardPoints.Add(t.position);

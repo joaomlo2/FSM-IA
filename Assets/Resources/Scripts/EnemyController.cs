@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour {
@@ -12,22 +13,23 @@ public class EnemyController : MonoBehaviour {
 
     public PlayerController Player;
     public Text textbox;
-
-    public Test_HSMController testHSM;
+    
+    public Test_SM sm;
     public void Awake()
     {
         Player = GameObject.Find("Player").GetComponent<PlayerController>();
         textbox = transform.FindChild("Canvas").FindChild("Text").GetComponent<Text>();
-        testHSM=new Test_HSMController(this,Player);
+        sm = new Test_SM(this, Player);
     }
 
     public void Start()
     {
-
     }
 
     public void Update()
     {
-        testHSM.DoActions();
+        if (sm.CurrentState != null)
+            textbox.text = sm.CurrentState.Name;
+        sm.update();
     }
 }

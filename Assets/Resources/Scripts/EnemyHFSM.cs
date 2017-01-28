@@ -6,7 +6,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using JetBrains.Annotations;
 
-//Componentes Principais da Máquina de Estados
+//Componentes Principais das Máquina de Estados
 //Interfaces
 public interface IAction
 {
@@ -26,8 +26,7 @@ public interface ICondition
 //Classes
 public class Transition : ITransition
 {
-    public int TransitionLevel;
-    public State Parent;
+    public SM parentMachine;
     public List<IAction> Actions;
     public List<ICondition> ConditionsList;
     public State targetState;
@@ -43,33 +42,10 @@ public class Transition : ITransition
     }
 }
 
-public class HSMController
-{
-    public EnemyController enemy;
-    public PlayerController player;
-
-    public HSM MainHSM;//Guarda-se a Máquina de Estados Mãe
-    public State currentState;//Para se saber onde se está neste momento
-
-    public void DoActions()
-    {
-        //Vão-se buscar as acções a ser executadas a partir da máquina inicial/principal
-        List<IAction> actionsToExecute = MainHSM.update();
-        foreach (IAction action in actionsToExecute)
-        {
-            if (action != null)
-            {
-                action.DoAction();
-            }
-        }
-    }
-}
-
 public class State
 {
     public string Name;
-    public int StateLevel;
-    public State ParentState;
+    public SM parentMachine;
     public List<IAction> Actions;
     public IAction EntryAction;
     public IAction ExitAction;
@@ -94,12 +70,123 @@ public class State
     }
 }
 
-public class HSM : State
+public class HSMTransition : ITransition
+{
+    public int TransitionLevel;
+    public HSMState Parent;
+    public List<IAction> Actions;
+    public List<ICondition> ConditionsList;
+    public HSMState targetState;
+
+    public bool CanPerformTransition()
+    {
+        foreach (ICondition condition in ConditionsList)
+        {
+            if (!condition.test())
+                return false;
+        }
+        return true;
+    }
+}
+
+public class HSMController
+{
+    public EnemyController enemy;
+    public PlayerController player;
+
+    public HSM MainHSM;//Guarda-se a Máquina de Estados Mãe
+    public HSMState currentState;//Para se saber onde se está neste momento
+
+    public void DoActions()
+    {
+        //Vão-se buscar as acções a ser executadas a partir da máquina inicial/principal
+        List<IAction> actionsToExecute = MainHSM.update();
+        foreach (IAction action in actionsToExecute)
+        {
+            if (action != null)
+            {
+                action.DoAction();
+            }
+        }
+    }
+}
+
+public class HSMState
+{
+    public string Name;
+    public int StateLevel;
+    public HSMState ParentState;
+    public List<IAction> Actions;
+    public IAction EntryAction;
+    public IAction ExitAction;
+    public List<HSMTransition> transitions;
+
+    public HSMTransition CheckForTriggeredTransition()
+    {
+        foreach (HSMTransition t in transitions)
+        {
+            bool AllConditionsAreMet = true;
+            foreach (ICondition condition in t.ConditionsList)
+            {
+                if (!condition.test())
+                    AllConditionsAreMet = false;
+            }
+            if (AllConditionsAreMet)
+            {
+                return t;
+            }
+        }
+        return null;
+    }
+}
+
+public class SM
+{
+    public string Name;
+    public List<State> States;
+    public State CurrentState;
+    public State InitialState;
+
+    public List<IAction> GetActions()
+    {
+        List<IAction> actions = new List<IAction>();
+        foreach (Transition t in CurrentState.transitions)
+        {
+            if (t.CanPerformTransition())
+            {
+                //if(CurrentState.EntryAction!=null)
+                //    actions.Add(CurrentState.ExitAction);
+                CurrentState = t.targetState;
+                //if (CurrentState.ExitAction != null)
+                //    actions.Add(CurrentState.ExitAction);
+                return actions;
+            }
+        }
+        actions.AddRange(CurrentState.Actions);
+        return actions;
+    }
+
+    public void update()
+    {
+        if (CurrentState == null)
+        {
+            CurrentState = InitialState;
+        }
+        List<IAction> actionsToRun = GetActions();
+        foreach (IAction action in actionsToRun)
+        {
+            if(action!=null)
+                action.DoAction();
+        }
+    }
+}
+
+public class HSM : HSMState
 {
     public int HSMLevel;//(Será mesmo necessário?) 0 significa o nível principal da HSM
-    public List<State> states;//Estados ou outras sub-HSMs
-    public State initialState;//Para saber o estado inicial da máquina
-    public State currentState;//Para saber em que estado é que esta máquina se encontra
+    public List<HSMState> states;//Estados ou outras sub-HSMs
+    public HSMState initialState;//Para saber o estado inicial da máquina
+    public HSMState currentState;//Para saber em que estado é que esta máquina se encontra
 
     public List<IAction> update()
     {
@@ -107,7 +194,7 @@ public class HSM : State
         {
             currentState = initialState;
         }
-        foreach (Transition transition in transitions)
+        foreach (HSMTransition transition in transitions)
         {
             //Se todas as condições de transição se verificarem
             if (transition.CanPerformTransition())
@@ -142,9 +229,9 @@ public class HSM : State
         }
     }
 
-    public State GetStateForTransition(State stateToLookFor,Transition transition)
+    public HSMState GetStateForTransition(HSMState stateToLookFor,HSMTransition transition)
     {
-        foreach (State s in states)
+        foreach (HSMState s in states)
         {
             if (s.GetType() == states.GetType())
             {
@@ -169,8 +256,8 @@ public class HSM_Main : HSM
         Actions = new List<IAction>();//Não haverão acções a este nível
         EntryAction = null;
         ExitAction = null;
-        transitions = new List<Transition>();//Não haverão transições a este nível
-        states = new List<State>();//Povoar esta lista com a máquina "EnemyAlive" e com o estado de morte do personagem
+        transitions = new List<HSMTransition>();//Não haverão transições a este nível
+        states = new List<HSMState>();//Povoar esta lista com a máquina "EnemyAlive" e com o estado de morte do personagem
         states.Add(new HSM_EnemyAlive(this));
         states.Add(new State_Death { enemy = this.enemy, ParentState = this });
         initialState = states[0];
@@ -193,12 +280,12 @@ public class HSM_EnemyAlive : HSM
         Actions = new List<IAction>();//Acções do inimigo vivo? Nada foi idealizado para já.
         EntryAction = null;
         ExitAction = null;//Quando o inimigo deixa de estar vivo, inicia as acções de entrada no estado de morte
-        states = new List<State>();//Adicionar a HSM de Patrulha e os estados de Perseguição e Ataque
+        states = new List<HSMState>();//Adicionar a HSM de Patrulha e os estados de Perseguição e Ataque
         states.Add(new HSM_Patrol(this));
         states.Add(new State_Pursuit(this));
         states.Add(new State_Attack(this));
         initialState = states[0];
-        transitions = new List<Transition>();//Só haverá uma transição que irá para o State_Death
+        transitions = new List<HSMTransition>();//Só haverá uma transição que irá para o State_Death
         transitions.Add(new Transition_EnemyDies { enemy = this.enemy });
     }
 }
@@ -218,16 +305,16 @@ public class HSM_Patrol : HSM
         Actions = new List<IAction>();
         EntryAction = null;
         ExitAction = null;
-        states = new List<State>();
+        states = new List<HSMState>();
         //states.Add(State_Guard);
         //states.Add(State_Relocate);
         //initialState=states[0];
-        transitions = new List<Transition>();
+        transitions = new List<HSMTransition>();
         //transitions.Add(new Transition_EnemyDetectsPlayer())
     }
 }
 //States
-public class State_Death : State
+public class State_Death : HSMState
 {
     public EnemyController enemy;
 
@@ -239,10 +326,10 @@ public class State_Death : State
         Actions = new List<IAction>();//Ele não irá fazer nada enquanto está morto
         //EntryAction=new Action_Death();//(É PRECISO IMPLEMENTAR)Ao entrar neste estado, ele irá desencadear a acção de morte
         ExitAction = null;//Neste jogo os inimigos não regressam da morte!
-        transitions = new List<Transition>();//Idem aspas
+        transitions = new List<HSMTransition>();//Idem aspas
     }
 }
-public class State_Pursuit : State
+public class State_Pursuit : HSMState
 {
     public EnemyController enemy;
     public PlayerController player;
@@ -259,12 +346,12 @@ public class State_Pursuit : State
         //EntryAction=
         //ExitAction=
 
-        transitions = new List<Transition>();
+        transitions = new List<HSMTransition>();
         //transitions.Add(new Transition_EnemyGetsInRangeOfPlayer);
         //transitions.Add(new Transition_EnemyLoosesSightOfPlayer);
     }
 }
-public class State_Attack : State
+public class State_Attack : HSMState
 {
     public EnemyController enemy;
     public PlayerController player;
@@ -281,13 +368,13 @@ public class State_Attack : State
         //Actions.Add(Action_Attack)
         //EntryAction=
         //ExitAction=
-        transitions = new List<Transition>();
+        transitions = new List<HSMTransition>();
         //transitions.Add(Transition_PlayerExitsAttackRange);
         //transitions.Add(Transition_EnemyKillsPlayer)
     }
 }
 //Transitions
-public class Transition_EnemyDies : Transition
+public class Transition_EnemyDies : HSMTransition
 {
     public EnemyController enemy;
 
@@ -296,7 +383,7 @@ public class Transition_EnemyDies : Transition
         TransitionLevel = 1;
         Actions = new List<IAction>();//Deixa-se a acção para a de entrada no estado de morte
         ConditionsList = new List<ICondition>();//Aqui adiciona-se a condição da causa da morte do personagem (a vida do personagem fica a 0)
-        ConditionsList.Add(new Condition_IsEnemyHealthNull { enemy = this.enemy });
+        ConditionsList.Add(new Condition_IsEnemyHealthNull(enemy));
         targetState = new State_Death();
     }
 }
@@ -304,6 +391,12 @@ public class Transition_EnemyDies : Transition
 public class Condition_IsEnemyHealthNull : ICondition
 {
     public EnemyController enemy;
+
+    public Condition_IsEnemyHealthNull(EnemyController Enemy)
+    {
+        enemy = Enemy;
+    }
+
     public bool test()
     {
         return enemy.Health <= 0;
@@ -313,6 +406,12 @@ public class Condition_IsPlayerDetectedByEnemy : ICondition
 {
     public EnemyController enemy;
     public PlayerController player;
+
+    public Condition_IsPlayerDetectedByEnemy(EnemyController Enemy,PlayerController Player)
+    {
+        enemy = Enemy;
+        player = Player;
+    }
 
     public bool test()
     {
@@ -328,6 +427,12 @@ public class Condition_IsPlayerNotDetectedByEnemy : ICondition
 {
     public EnemyController enemy;
     public PlayerController player;
+
+    public Condition_IsPlayerNotDetectedByEnemy(EnemyController Enemy, PlayerController Player)
+    {
+        enemy = Enemy;
+        player = Player;
+    }
 
     public bool test()
     {
@@ -345,6 +450,12 @@ public class Action_AttackPlayer : IAction
     public EnemyController enemy;
     public PlayerController player;
 
+    public Action_AttackPlayer(EnemyController Enemy, PlayerController Player)
+    {
+        enemy = Enemy;
+        player = Player;
+    }
+
     public void DoAction()
     {
         player.Health -= enemy.AttackStrength;
@@ -354,6 +465,12 @@ public class Action_MoveToPoint : IAction
 {
     public EnemyController enemy;
     public Vector2 destination;
+
+    public Action_MoveToPoint(EnemyController Enemy)
+    {
+        enemy = Enemy;
+    }
+
     public void DoAction()
     {
         enemy.transform.position = destination;
@@ -381,21 +498,20 @@ public class Action_Wait : MonoBehaviour, IAction
         yield return null;
     }
 }
-//Main Class
-//Componentes Específicos da Máquina de estados de teste
+//Componentes Específicos da Máquina de estados hierárquica de teste
 //Controlador
 public class Test_HSMController : HSMController
 {
     public Test_HSMController(EnemyController EnemyScript,PlayerController PlayerScript)
     {
         MainHSM=new Test_HSM_Main();
-        MainHSM.states[0].transitions.Add(new Test_Transition_PlayerGotInAttackRange
+        MainHSM.states[0].transitions.Add(new Test_HSM_Transition_PlayerGotInAttackRange
         {
             enemy = EnemyScript,
             Player = PlayerScript,
             targetState = MainHSM.states[1]
         });
-        MainHSM.states[1].transitions.Add(new Test_Transition_PlayerGotOutOfAttackRange
+        MainHSM.states[1].transitions.Add(new Test_HSM_Transition_PlayerGotOutOfAttackRange
         {
             enemy = EnemyScript,
             Player = PlayerScript,
@@ -418,20 +534,20 @@ public class Test_HSM_Main : HSM
         Actions = new List<IAction>();
         EntryAction = null;
         ExitAction = null;
-        transitions = new List<Transition>();
-        states = new List<State>();
-        states.Add(new Test_State_Guard(this));
-        states.Add(new Test_State_Attack(this));
+        transitions = new List<HSMTransition>();
+        states = new List<HSMState>();
+        states.Add(new Test_HSM_State_Guard(this));
+        states.Add(new Test_HSM_State_Attack(this));
         initialState = states[0];
     }
 }
 //States
-public class Test_State_Guard:State
+public class Test_HSM_State_Guard:HSMState
 {
     public EnemyController enemy;
     public PlayerController player;
 
-    public Test_State_Guard(Test_HSM_Main parent)
+    public Test_HSM_State_Guard(Test_HSM_Main parent)
     {
         Name = "Test_Guard";
         StateLevel = 1;
@@ -439,15 +555,15 @@ public class Test_State_Guard:State
         Actions = new List<IAction>();
         EntryAction = null;
         ExitAction = null;
-        transitions = new List<Transition>();
+        transitions = new List<HSMTransition>();
     }
 }
-public class Test_State_Attack:State
+public class Test_HSM_State_Attack:HSMState
 {
     public EnemyController enemy;
     public PlayerController player;
 
-    public Test_State_Attack(Test_HSM_Main parent)
+    public Test_HSM_State_Attack(Test_HSM_Main parent)
     {
         enemy = parent.enemy;
         player = parent.player;
@@ -455,42 +571,134 @@ public class Test_State_Attack:State
         StateLevel = 1;
         ParentState = parent;
         Actions = new List<IAction>();
-        Actions.Add(new Action_AttackPlayer {enemy = this.enemy,player = this.player});
+        Actions.Add(new Action_AttackPlayer(enemy,player));
         EntryAction = null;
         ExitAction = null;
-        transitions = new List<Transition>();
+        transitions = new List<HSMTransition>();
     }
 }
 //Transitions
-public class Test_Transition_PlayerGotInAttackRange : Transition
+public class Test_HSM_Transition_PlayerGotInAttackRange : HSMTransition
 {
     public EnemyController enemy;
     public PlayerController Player;
 
-    public Test_Transition_PlayerGotInAttackRange()
+    public Test_HSM_Transition_PlayerGotInAttackRange()
     {
         TransitionLevel = 1;
         Actions = new List<IAction>();
         ConditionsList = new List<ICondition>();
-        ConditionsList.Add(new Condition_IsPlayerDetectedByEnemy() { enemy = this.enemy,player = this.Player});
+        ConditionsList.Add(new Condition_IsPlayerDetectedByEnemy(enemy,Player));
         targetState = null;
     }
 }
-public class Test_Transition_PlayerGotOutOfAttackRange : Transition
+public class Test_HSM_Transition_PlayerGotOutOfAttackRange : HSMTransition
 {
     public EnemyController enemy;
     public PlayerController Player;
 
-    public Test_Transition_PlayerGotOutOfAttackRange()
+    public Test_HSM_Transition_PlayerGotOutOfAttackRange()
     {
         TransitionLevel = 1;
         Actions = new List<IAction>();
         ConditionsList = new List<ICondition>();
-        ConditionsList.Add(new Condition_IsPlayerNotDetectedByEnemy() { enemy = this.enemy, player = this.Player });
+        ConditionsList.Add(new Condition_IsPlayerNotDetectedByEnemy(enemy,Player));
         targetState = null;
     }
 }
 //Condições e acções são aproveitadas da máquina principal
+
+//Componentes Específicos da Máquina de Estados Simples de Teste
+//SM
+public class Test_SM : SM
+{
+    public EnemyController Enemy;
+    public PlayerController Player;
+    public Test_SM(EnemyController thisGuy,PlayerController thePlayer)
+    {
+        Enemy = thisGuy;
+        Player = thePlayer;
+        this.Name = "Máquina de Estados de Teste";
+        this.States=new List<State>();
+        States.Add(new Test_SM_State_Guard(Enemy,Player,this));
+        States.Add(new Test_SM_State_Attack(Enemy,Player,this));
+        States[0].transitions[0].targetState = States[1];
+        States[1].transitions[0].targetState = States[0];
+        this.InitialState = States[0];
+        this.CurrentState = null;
+    }
+}
+//States
+public class Test_SM_State_Guard : State
+{
+    public EnemyController enemy;
+    public PlayerController player;
+    public Test_SM_State_Guard(EnemyController theEnemy,PlayerController thePlayer,SM parent)
+    {
+        parentMachine = parent;
+        enemy = theEnemy;
+        player = thePlayer;
+        Name = "Test_Guard";
+        Actions = new List<IAction>();
+        EntryAction = null;
+        ExitAction = null;
+        transitions = new List<Transition>();
+        transitions.Add(new Test_SM_Transition_PlayerGotInAttackRange(enemy,player,parent));
+    }
+}
+public class Test_SM_State_Attack : State
+{
+    public SM parentMachine;
+    public EnemyController enemy;
+    public PlayerController player;
+
+    public Test_SM_State_Attack(EnemyController thisEnemy,PlayerController thisPlayer,SM parent)
+    {
+        parentMachine = parent;
+        enemy = thisEnemy;
+        player = thisPlayer;
+        Name = "Test_Attack";
+        Actions = new List<IAction>();
+        Actions.Add(new Action_AttackPlayer(enemy,player));
+        EntryAction = null;
+        ExitAction = null;
+        transitions = new List<Transition>();
+        transitions.Add(new Test_SM_Transition_PlayerGotOutOfAttackRange(enemy,player,parent));
+    }
+}
+//Transições
+public class Test_SM_Transition_PlayerGotInAttackRange: Transition
+{
+    public SM parentMachine;
+    public EnemyController enemy;
+    public PlayerController Player;
+
+    public Test_SM_Transition_PlayerGotInAttackRange(EnemyController theEnemy,PlayerController thePlayer,SM parent)
+    {
+        parentMachine = parent;
+        enemy = theEnemy;
+        Player = thePlayer;
+        Actions = new List<IAction>();
+        ConditionsList = new List<ICondition>();
+        ConditionsList.Add(new Condition_IsPlayerDetectedByEnemy(enemy,Player));
+    }
+}
+public class Test_SM_Transition_PlayerGotOutOfAttackRange : Transition
+{
+    public SM parentMachine;
+    public EnemyController enemy;
+    public PlayerController Player;
+
+    public Test_SM_Transition_PlayerGotOutOfAttackRange(EnemyController theEnemy,PlayerController thePlayer,SM parent)
+    {
+        parentMachine = parent;
+        enemy = theEnemy;
+        Player = thePlayer;
+        Actions = new List<IAction>();
+        ConditionsList = new List<ICondition>();
+        ConditionsList.Add(new Condition_IsPlayerNotDetectedByEnemy(enemy,Player));
+    }
+}
 //Classe Principal deste script (NÃO APAGAR)
 public class EnemyHFSM : MonoBehaviour {
 
